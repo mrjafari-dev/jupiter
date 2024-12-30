@@ -1,6 +1,7 @@
 package dev.studio.Jupiter.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,32 +23,36 @@ import dev.studio.Jupiter.domain.model.roverUiModelList
 
 
 @Composable
-fun RoverList(){
+fun RoverList(onItemClick: (String) -> Unit){
     LazyColumn{
         itemsIndexed(roverUiModelList){index , item->
-            Rover(item.name,item.img , item.landingDate,item.distance)
+            Rover(item.name,item.img , item.landingDate,item.distance){name->
+                onItemClick(name)
+            }
         }
     }
+
 }
 
 
 @Preview
 @Composable
 fun RoverPreview() {
-    Rover("SampleText",R.drawable.bot1 , "18 frb 2021","12.56 km")
+    Rover("SampleText",R.drawable.bot1 , "18 frb 2021","12.56 km"){
+
+    }
 }
 
 
 @Composable
-fun Rover(name: String, img: Int, landingDate: String, distance: String) {
-    Card (modifier = Modifier.padding(16.dp)){
+fun Rover(name: String, img: Int, landingDate: String, distance: String,onItemClick: (String) -> Unit) {
+    Card (modifier = Modifier.padding(16.dp).clickable { onItemClick(name) }){
         Column(modifier = Modifier.padding(16.dp)) {
             Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, text = name , fontWeight = FontWeight.Bold, fontSize = 24.sp)
             Image(modifier = Modifier.fillMaxWidth().height(160.dp),painter = painterResource(img),contentDescription = null)
             Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start, text = "created : NASA/JPL" , fontWeight = FontWeight.Medium, fontSize = 8.sp)
             Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start, text = "Landing date : $landingDate" , fontWeight = FontWeight.Medium, fontSize = 12.sp)
             Text(modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Start, text = "Distance travel : $distance" , fontWeight = FontWeight.Medium, fontSize = 12.sp)
-
 
         }
 
