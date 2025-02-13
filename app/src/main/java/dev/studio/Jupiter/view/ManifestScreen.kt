@@ -6,5 +6,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ManifestScreen(roverName:String?) {
-    Text("Hello")
+    Text("Hello $roverName")
 }
